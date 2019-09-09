@@ -13,8 +13,13 @@ class MyWrappedGame(object):
         #        os.environ["SDL_VIDEODRIVER"] = "dummy"
 
         pygame.init()
-        pygame.key.set_repeat(10, 100)
-
+        pygame.key.set_repeat(10, 100) 
+        '''
+        When the keyboard repeat is enabled, 
+        keys that are held down will generate multiple pygame.KEYDOWN events. 
+        The delay parameter is the number of milliseconds before the first repeated pygame.KEYDOWN event will be sent. 
+        After that, another pygame.KEYDOWN event will be sent every interval milliseconds. 
+        '''
         # set constants
         self.COLOR_WHITE = (255, 255, 255)
         self.COLOR_BLACK = (0, 0, 0)
@@ -38,10 +43,11 @@ class MyWrappedGame(object):
         self.font = pygame.font.SysFont("Comic Sans MS", self.FONT_SIZE)
 
     def reset(self):
-        self.frames = collections.deque(maxlen=4)
+        self.frames = collections.deque(maxlen=4) #deque- an iterable list
+        #self.frames object with a max length of 4
         self.game_over = False
         # initialize positions
-        self.paddle_x = self.GAME_WIDTH // 2
+        self.paddle_x = self.GAME_WIDTH // 2 # // - division to integer
         self.game_score = 0
         self.reward = 0
         self.ball_x = random.randint(0, self.GAME_WIDTH)
@@ -53,7 +59,7 @@ class MyWrappedGame(object):
         self.clock = pygame.time.Clock()
 
     def step(self, action):
-        pygame.event.pump()
+        pygame.event.pump() # for each frame in the game, the computer is allowed to internally handle commands
 
         if action == 0:  # move paddle left
             self.paddle_x -= self.PADDLE_VELOCITY
@@ -97,17 +103,18 @@ class MyWrappedGame(object):
             else:
                 self.reward = -1
 
-            self.game_score += self.reward
-            self.ball_x = random.randint(0, self.GAME_WIDTH)
+            self.game_score += self.reward # adds the reward to the game_score
+            self.ball_x = random.randint(0, self.GAME_WIDTH) # the ball gets a random x starting point
             self.ball_y = self.GAME_CEILING
-            self.num_tries += 1
+            self.num_tries += 1 
 
         pygame.display.flip()
 
         # save last 4 frames
         self.frames.append(pygame.surfarray.array2d(self.screen))
-
-        if self.num_tries >= self.MAX_TRIES_PER_GAME:
+        
+    
+        if self.num_tries >= self.MAX_TRIES_PER_GAME: 
             self.game_over = True
 
         self.clock.tick(30)
@@ -117,7 +124,7 @@ class MyWrappedGame(object):
         return np.array(list(self.frames))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #the file is read and it returns  
     game = MyWrappedGame()
 
     NUM_EPOCHS = 10
