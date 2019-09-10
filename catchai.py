@@ -7,7 +7,9 @@ import os
 
 
 class MyWrappedGame(object):
-
+    
+    
+    # initialize the varaibles
     def __init__(self):
         # run pygame in headless mode
         #        os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -41,7 +43,8 @@ class MyWrappedGame(object):
         self.MAX_TRIES_PER_GAME = 1
         self.CUSTOM_EVENT = pygame.USEREVENT + 1
         self.font = pygame.font.SysFont("Comic Sans MS", self.FONT_SIZE)
-
+    
+    # method used at the start of each game to reinitialize variables
     def reset(self):
         self.frames = collections.deque(maxlen=4) #deque- an iterable list
         #self.frames object with a max length of 4
@@ -57,7 +60,8 @@ class MyWrappedGame(object):
         self.screen = pygame.display.set_mode(
             (self.GAME_WIDTH, self.GAME_HEIGHT))
         self.clock = pygame.time.Clock()
-
+        
+        # what happens in a single loop
     def step(self, action):
         pygame.event.pump() # for each frame in the game, the computer is allowed to internally handle commands
 
