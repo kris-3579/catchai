@@ -31,7 +31,7 @@ def preprocess_images(images):
     s_t = np.expand_dims(s_t, axis=0)
     return s_t
 
-
+# calculates the Q-function value from the experiences
 def get_next_batch(experience, model, num_actions, gamma, batch_size):
     batch_indices = np.random.randint(low=0, high=len(experience),
                                       size=batch_size)
